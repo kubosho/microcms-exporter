@@ -23,10 +23,7 @@ async function writeMarkdownFile(item) {
                 `${body}`,
         ].join("\n");
 
-        const date = new Date(publishedAt);
-        const year = date.getUTCFullYear();
-
-        const filePath = path.join(__dirname, `./outputs/${year}/${slug}.md`);
+        const filePath = path.join(__dirname, `./outputs/${slug}.md`);
         const dirPath = path.dirname(filePath);
 
         try {
