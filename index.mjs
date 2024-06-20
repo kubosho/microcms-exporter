@@ -9,19 +9,22 @@ async function writeMarkdownFile(item) {
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename)
 
-        const { publishedAt, revisedAt, title, body, slug, categories, tags } = item;
+        const { publishedAt, revisedAt, title, body, slug, excerpt, categories, tags } = item;
 
         const mdBody = [
                 `---`,
                 `title: ${title}`,
-                `categories: ${categories.join(",")}`,
-                `tags: ${tags.join(",")}`,
+                excerpt != null ? `excerpt: ${excerpt}` : null,
+                categories != null && categories.length > 0 ? `categories: [${categories.join(",")}]` : null,
+                tags != null && tags.length > 0 ? `tags: [${tags.join(",")}]` : null,
                 `publishedAt: ${publishedAt}`,
                 `revisedAt: ${revisedAt}`,
                 `---`,
                 ``,
                 `${body}`,
-        ].join("\n");
+        ]
+                .filter((item) => item != null)
+                .join("\n");
 
         const filePath = path.join(__dirname, `./outputs/${slug}.md`);
         const dirPath = path.dirname(filePath);
