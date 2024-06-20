@@ -35,11 +35,15 @@ async function writeMarkdownFile(item) {
                 // do nothing
         }
 
-        await fs.writeFile(
-                filePath,
-                mdBody,
-                { flag: "wx" }
-        );
+        try {
+                await fs.writeFile(
+                        filePath,
+                        mdBody,
+                        { flag: "w" }
+                );
+        } catch (_err) {
+                // do nothing
+        }
 }
 
 async function main() {
